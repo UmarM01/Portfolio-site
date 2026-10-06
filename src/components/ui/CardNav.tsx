@@ -3,22 +3,10 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ChevronDown, Trophy, Navigation, Briefcase, Rocket, BookOpen, ImageIcon, FileText, MessageCircle } from 'lucide-react';
+import { ChevronDown, Trophy, Navigation, Briefcase, Rocket, FileText, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface NavLink {
-    label: string;
-    href: string;
-    description?: string;
-}
-
-interface NavItem {
-    label: string;
-    links: NavLink[];
-}
-
 interface CardNavProps {
-    items: NavItem[];
     theme?: 'light' | 'dark';
     pathname?: string;
 }
@@ -28,8 +16,8 @@ function GridSnake({ theme }: { theme: string }) {
     const [pathY, setPathY] = useState<number[]>([]);
     
     useEffect(() => {
-        const cols = 11; // ~264px max width
-        const rows = 6;  // ~144px max height
+        const cols = 11;
+        const rows = 6;
         const gridSize = 24;
         
         let x = Math.floor(Math.random() * cols) * gridSize;
@@ -38,7 +26,7 @@ function GridSnake({ theme }: { theme: string }) {
         const px = [x];
         const py = [y];
         
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 30; i++) {
             const isHorizontal = Math.random() > 0.5;
             const step = (Math.random() > 0.5 ? 1 : -1) * gridSize;
             
@@ -62,8 +50,8 @@ function GridSnake({ theme }: { theme: string }) {
     if (pathX.length === 0) return null;
 
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30 group-hover:opacity-100 transition-opacity duration-700">
-            {[...Array(4)].map((_, i) => (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25 group-hover:opacity-100 transition-opacity duration-700">
+            {[...Array(3)].map((_, i) => (
                 <motion.div
                     key={i}
                     className={cn(
@@ -75,7 +63,7 @@ function GridSnake({ theme }: { theme: string }) {
                         y: pathY,
                     }}
                     transition={{
-                        duration: 15,
+                        duration: 14,
                         repeat: Infinity,
                         ease: "linear",
                         delay: i * 0.15
@@ -83,10 +71,10 @@ function GridSnake({ theme }: { theme: string }) {
                 />
             ))}
         </div>
-    )
+    );
 }
 
-function ActiveDot({ theme }: { theme: string }) {
+function ActiveDot() {
     return (
         <span className="inline-flex ml-2 -translate-y-px align-middle">
             <span className="relative flex h-2 w-2">
@@ -97,124 +85,130 @@ function ActiveDot({ theme }: { theme: string }) {
     );
 }
 
-function MegaBoxBig({ href, icon: Icon, title, desc, theme, pathname }: any) {
-    const isActive = pathname === href || pathname?.startsWith(`${href}/`);
-    
+function BentoCard({
+    href,
+    icon: Icon,
+    title,
+    desc,
+    badge,
+    theme,
+    pathname,
+    colorClass = "text-sky-400",
+    gradientClass = "from-sky-500/10 to-transparent",
+}: {
+    href: string;
+    icon: any;
+    title: string;
+    desc: string;
+    badge?: string;
+    theme: string;
+    pathname: string;
+    colorClass?: string;
+    gradientClass?: string;
+}) {
+    const isActive = pathname === href || (href !== '/' && href !== '#' && pathname?.startsWith(`${href}/`));
+    const isExternal = href.endsWith('.pdf') || href.startsWith('http');
+
     return (
-        <Link href={href} className={cn(
-            "group relative flex flex-col justify-between rounded-2xl border p-5 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 h-40 overflow-hidden",
-            theme === 'dark'
-                ? cn("bg-[#161616] hover:bg-[#1f1f1f] hover:shadow-xl hover:shadow-black/50", isActive ? "border-[#D1FF4D]/50 shadow-[0_0_15px_rgba(209,255,77,0.05)]" : "border-white/10 hover:border-white/20")
-                : cn("hover:bg-white hover:shadow-xl hover:shadow-black/10", isActive ? "bg-white border-[#D1FF4D]/80 shadow-md shadow-[#D1FF4D]/10" : "bg-black/[0.02] border-black/10 hover:border-black/20")
-        )}>
+        <Link
+            href={href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noopener noreferrer" : undefined}
+            className={cn(
+                "group relative flex flex-col justify-between rounded-2xl border p-5 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5 min-h-[140px] overflow-hidden select-none",
+                theme === 'dark'
+                    ? cn(
+                        "bg-[#121214]/90 hover:bg-[#18181c]",
+                        isActive 
+                            ? "border-[#D1FF4D]/50 shadow-[0_0_20px_rgba(209,255,77,0.08)] ring-1 ring-[#D1FF4D]/30" 
+                            : "border-white/10 hover:border-white/25 hover:shadow-2xl hover:shadow-black/70"
+                    )
+                    : cn(
+                        "hover:bg-white hover:shadow-xl hover:shadow-black/10",
+                        isActive ? "bg-white border-[#D1FF4D]" : "bg-black/[0.02] border-black/10"
+                    )
+            )}
+        >
+            {/* Ambient Gradient on Hover */}
+            <div className={cn(
+                "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none",
+                gradientClass
+            )} />
+
             {/* Subtle Grid Background */}
-            <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-            
-            {/* Random Snake Animation */}
+            <div
+                className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                style={{
+                    backgroundImage: 'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+                    backgroundSize: '20px 20px'
+                }}
+            />
+
+            {/* Snake Animation */}
             <GridSnake theme={theme} />
 
-            <Icon className={cn("w-6 h-6 relative z-10 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white/70 group-hover:text-white") : (isActive ? "text-[#8cb815]" : "text-black/70 group-hover:text-black"))} />
-
-            <div className="relative z-10 mt-auto">
-                <h4 className={cn("font-bold text-[15px] mb-1.5 transition-colors duration-300 flex items-center", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white") : (isActive ? "text-[#8cb815]" : "text-black"))}>
-                    {title}
-                    {isActive && <ActiveDot theme={theme} />}
-                </h4>
-                <p className={cn("text-xs font-medium leading-relaxed transition-colors duration-300", theme === 'dark' ? "text-white/60 group-hover:text-white/80" : "text-black/60 group-hover:text-black/80")}>{desc}</p>
-            </div>
-            
-            {/* Soft Glow overlay on hover */}
-            <div className={cn(
-                "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none",
-                theme === 'dark' ? "bg-gradient-to-tr from-transparent via-white/5 to-transparent" : "bg-gradient-to-tr from-transparent via-black/5 to-transparent"
-            )} />
-        </Link>
-    )
-}
-
-function MegaBoxSmall({ href, icon: Icon, title, desc, theme, pathname }: any) {
-    const isActive = pathname === href || pathname?.startsWith(`${href}/`);
-    
-    return (
-        <Link href={href} className={cn(
-            "group relative flex flex-col justify-center rounded-2xl border p-4 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 overflow-hidden",
-            theme === 'dark'
-                ? cn("bg-[#161616] hover:bg-[#1f1f1f] hover:shadow-xl hover:shadow-black/50", isActive ? "border-[#D1FF4D]/50 shadow-[0_0_15px_rgba(209,255,77,0.05)]" : "border-white/10 hover:border-white/20")
-                : cn("hover:bg-white hover:shadow-xl hover:shadow-black/10", isActive ? "bg-white border-[#D1FF4D]/80 shadow-md shadow-[#D1FF4D]/10" : "bg-black/[0.02] border-black/10 hover:border-black/20")
-        )}>
-            <div className="flex items-start justify-between relative z-10">
-                <div>
-                    <h4 className={cn("font-bold text-sm mb-1.5 transition-colors duration-300 flex items-center", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white") : (isActive ? "text-[#8cb815]" : "text-black"))}>
-                        {title}
-                        {isActive && <ActiveDot theme={theme} />}
-                    </h4>
-                    <p className={cn("text-[11px] font-medium leading-relaxed transition-colors duration-300", theme === 'dark' ? "text-white/60 group-hover:text-white/80" : "text-black/60 group-hover:text-black/80")}>{desc}</p>
-                </div>
-                <div className={cn("p-1.5 rounded-xl transition-colors duration-300", theme === 'dark' ? "group-hover:bg-white/10" : "group-hover:bg-black/5")}>
-                    <Icon className={cn("w-4 h-4 mt-0.5 flex-shrink-0 transition-transform duration-500 group-hover:scale-125 group-hover:rotate-12", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white/40 group-hover:text-white/80") : (isActive ? "text-[#8cb815]" : "text-black/40 group-hover:text-black/80"))} />
-                </div>
-            </div>
-        </Link>
-    )
-}
-
-function SidebarLink({ href, icon: Icon, title, desc, theme, pathname }: any) {
-    const isChat = href === '#';
-    const isActive = pathname === href || (href !== '#' && pathname?.startsWith(`${href}/`));
-    
-    const className = cn(
-        "group flex items-center gap-4 rounded-2xl border p-4 transition-all duration-500 overflow-hidden relative",
-        theme === 'dark'
-            ? cn("bg-[#161616] hover:bg-[#1f1f1f]", isActive ? "border-[#D1FF4D]/50 shadow-[0_0_15px_rgba(209,255,77,0.05)]" : "border-white/10 hover:border-white/20")
-            : cn("hover:bg-white", isActive ? "bg-white border-[#D1FF4D]/80 shadow-sm shadow-[#D1FF4D]/10" : "bg-black/[0.02] border-black/10 hover:border-black/20"),
-        isChat ? "cursor-not-allowed opacity-70" : "cursor-pointer hover:scale-[1.02] hover:-translate-x-1 hover:shadow-xl"
-    );
-
-    const content = (
-        <>
-            <div className="flex-1 relative z-10">
-                <h4 className={cn("font-bold text-sm mb-1.5 transition-colors duration-300 flex items-center", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white") : (isActive ? "text-[#8cb815]" : "text-black"))}>
-                    {title}
-                    {isActive && <ActiveDot theme={theme} />}
-                </h4>
-                <p className={cn("text-[11px] font-medium transition-colors duration-300", theme === 'dark' ? "text-white/60 group-hover:text-white/80" : "text-black/60 group-hover:text-black/80")}>{desc}</p>
-            </div>
-            <Icon className={cn("w-5 h-5 relative z-10 transition-transform duration-500 group-hover:scale-125 group-hover:-rotate-6", theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white/40 group-hover:text-white/80") : (isActive ? "text-[#8cb815]" : "text-black/40 group-hover:text-black/80"))} />
-            
-            {/* Subtle highlight */}
-            {!isChat && (
+            {/* Top Bar: Icon + Optional Badge / Active Status */}
+            <div className="flex items-center justify-between relative z-10">
                 <div className={cn(
-                    "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none",
-                    theme === 'dark' ? "bg-gradient-to-r from-transparent to-white/[0.02]" : "bg-gradient-to-r from-transparent to-black/[0.02]"
-                )} />
-            )}
-        </>
-    );
-
-    if (isChat) {
-        return (
-            <div className={className}>
-                {content}
+                    "p-2.5 rounded-xl transition-all duration-300 group-hover:scale-110",
+                    theme === 'dark' ? "bg-white/5 border border-white/10 group-hover:border-white/20" : "bg-black/5"
+                )}>
+                    <Icon className={cn("w-5 h-5", colorClass)} />
+                </div>
+                <div className="flex items-center gap-1.5">
+                    {badge && (
+                        <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-400 group-hover:text-zinc-200">
+                            {badge}
+                        </span>
+                    )}
+                    {isActive && <ActiveDot />}
+                </div>
             </div>
-        );
-    }
 
-    return (
-        <Link href={href} className={className}>
-            {content}
+            {/* Bottom Content: Title + Description */}
+            <div className="relative z-10 mt-3">
+                <h4 className={cn(
+                    "font-bold text-sm tracking-tight mb-1 transition-colors duration-200 flex items-center gap-1.5",
+                    theme === 'dark' ? (isActive ? "text-[#D1FF4D]" : "text-white group-hover:text-white") : "text-black"
+                )}>
+                    {title}
+                </h4>
+                <p className={cn(
+                    "text-xs leading-relaxed line-clamp-2",
+                    theme === 'dark' ? "text-zinc-400 group-hover:text-zinc-300" : "text-zinc-600"
+                )}>
+                    {desc}
+                </p>
+            </div>
+
+            {/* Corner Highlight */}
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-white/[0.04] to-transparent rounded-tr-2xl pointer-events-none" />
         </Link>
-    )
+    );
 }
 
-export default function CardNav({
-    items,
+export function CardNav({
     theme = "dark",
     pathname = "/"
 }: CardNavProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    // Close on click outside
+    const handleMouseEnter = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+        setIsExpanded(true);
+    };
+
+    const handleMouseLeave = () => {
+        timeoutRef.current = setTimeout(() => {
+            setIsExpanded(false);
+        }, 180);
+    };
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -222,25 +216,31 @@ export default function CardNav({
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
     }, []);
 
-    const aboutItem = items.find(i => i.label === "About") || items[0];
-    const allHrefs = ['/projects', '/experience', '/skills', '/achievements', '/blog', '/gallery', '/resume'];
+    const allHrefs = ['/projects', '/about', '/contact', '/resume'];
     const isActive = useMemo(() => {
-        return allHrefs.some(href => pathname === href || pathname.startsWith(`${href}/`));
+        return allHrefs.some(href => pathname === href || (href !== '/' && pathname.startsWith(`${href}/`)));
     }, [pathname]);
 
     return (
-        <div ref={containerRef} className="relative">
+        <div 
+            ref={containerRef} 
+            className="relative py-1"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
             <motion.button
-                onMouseEnter={() => setIsExpanded(true)}
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={cn(
-                    "relative px-5 py-2 text-sm font-bold transition-all duration-300 rounded-full flex items-center gap-2 group",
+                    "relative px-5 py-2 text-sm font-bold transition-all duration-300 rounded-full flex items-center gap-2 group cursor-pointer",
                     isActive
-                        ? (theme === 'dark' ? "text-white bg-white/10" : "text-black bg-black/5")
-                        : (theme === 'dark' ? "text-white/70 hover:text-white" : "text-black/70 hover:text-black")
+                        ? "text-white bg-white/10 shadow-inner"
+                        : "text-zinc-400 hover:text-white hover:bg-white/5"
                 )}
             >
                 <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
@@ -258,7 +258,7 @@ export default function CardNav({
                             />
                         </motion.div>
                     )}
-                    {aboutItem.label}
+                    About
                 </span>
                 <motion.div
                     animate={{ rotate: isExpanded ? 180 : 0 }}
@@ -269,46 +269,75 @@ export default function CardNav({
                 </motion.div>
             </motion.button>
 
-            {/* Mega Menu Dropdown */}
+            {/* Mega Menu Dropdown: Clean 2x2 Bento Grid */}
             <AnimatePresence>
                 {isExpanded && (
                     <motion.div
-                        onMouseLeave={() => setIsExpanded(false)}
-                        initial={{ opacity: 0, y: 10, scale: 0.98, x: "-50%" }}
-                        animate={{ opacity: 1, y: 20, scale: 1, x: "-50%" }}
-                        exit={{ opacity: 0, y: 10, scale: 0.98, x: "-50%" }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="absolute top-full left-1/2 z-[100] pointer-events-auto"
+                        initial={{ opacity: 0, y: 6, scale: 0.97, x: "-50%" }}
+                        animate={{ opacity: 1, y: 12, scale: 1, x: "-50%" }}
+                        exit={{ opacity: 0, y: 6, scale: 0.97, x: "-50%" }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="absolute top-full left-1/2 z-[100] pointer-events-auto pt-2"
                     >
                         <div className={cn(
-                            "relative w-[850px] rounded-[1.5rem] border shadow-2xl flex backdrop-blur-2xl transition-all overflow-hidden",
+                            "relative w-[580px] max-w-[92vw] rounded-[1.75rem] border shadow-2xl backdrop-blur-2xl transition-all overflow-hidden p-3.5 sm:p-4.5",
                             theme === 'dark'
-                                ? "bg-[#0a0a0a]/95 border-white/10 shadow-black/80"
-                                : "bg-white/95 border-black/10 shadow-black/5"
+                                ? "bg-[#0b0b0d]/95 border-white/10 shadow-black/90 ring-1 ring-white/5"
+                                : "bg-white/95 border-black/10 shadow-black/10"
                         )}>
-                            {/* Left Main Area */}
-                            <div className="flex-1 p-5 flex flex-col gap-4">
-                                {/* Top 2 big boxes */}
-                                <div className="grid grid-cols-2 gap-4">
-                                    <MegaBoxBig href="/projects" icon={Rocket} title="Project" desc="Discover my latest builds" theme={theme} pathname={pathname} />
-                                    <MegaBoxBig href="/experience" icon={Briefcase} title="Experience" desc="My professional journey" theme={theme} pathname={pathname} />
-                                </div>
-                                {/* Bottom 3 small boxes */}
-                                <div className="grid grid-cols-3 gap-4">
-                                    <MegaBoxSmall href="/skills" icon={Navigation} title="Skill" desc="Technical expertise" theme={theme} pathname={pathname} />
-                                    <MegaBoxSmall href="/achievements" icon={Trophy} title="Achievement" desc="Milestones reached" theme={theme} pathname={pathname} />
-                                    <MegaBoxSmall href="/blog" icon={BookOpen} title="Blog" desc="Insights and docs" theme={theme} pathname={pathname} />
-                                </div>
-                            </div>
+                            {/* 2x2 Bento Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                {/* 1. Projects */}
+                                <BentoCard
+                                    href="/projects"
+                                    icon={Rocket}
+                                    colorClass="text-sky-400"
+                                    gradientClass="from-sky-500/15 via-sky-500/5 to-transparent"
+                                    title="Projects"
+                                    desc="Production platforms, Zoopify, Selligo & systems"
+                                    badge="Live"
+                                    theme={theme}
+                                    pathname={pathname}
+                                />
 
-                            {/* Right Sidebar */}
-                            <div className={cn(
-                                "w-[280px] p-4 flex flex-col justify-center gap-4 border-l",
-                                theme === 'dark' ? "border-white/5" : "border-black/5"
-                            )}>
-                                <SidebarLink href="/gallery" icon={ImageIcon} title="Gallery" desc="Visual portfolio & moments" theme={theme} pathname={pathname} />
-                                <SidebarLink href="/resume" icon={FileText} title="Resume" desc="View or download my CV" theme={theme} pathname={pathname} />
-                                <SidebarLink href="#" icon={MessageCircle} title="Chat" desc="Coming soon to connect" theme={theme} pathname={pathname} />
+                                {/* 2. About Umar */}
+                                <BentoCard
+                                    href="/about"
+                                    icon={Trophy}
+                                    colorClass="text-yellow-400"
+                                    gradientClass="from-yellow-500/15 via-yellow-500/5 to-transparent"
+                                    title="About Umar"
+                                    desc="Engineering ethos, Cambridge (8.8 CGPA) & Lowe's India"
+                                    badge="Bio"
+                                    theme={theme}
+                                    pathname={pathname}
+                                />
+
+                                {/* 3. Resume */}
+                                <BentoCard
+                                    href="/resume.pdf"
+                                    icon={FileText}
+                                    colorClass="text-emerald-400"
+                                    gradientClass="from-emerald-500/15 via-emerald-500/5 to-transparent"
+                                    title="Resume"
+                                    desc="View & download official CV and credentials"
+                                    badge="PDF"
+                                    theme={theme}
+                                    pathname={pathname}
+                                />
+
+                                {/* 4. Contact */}
+                                <BentoCard
+                                    href="/contact"
+                                    icon={MessageCircle}
+                                    colorClass="text-purple-400"
+                                    gradientClass="from-purple-500/15 via-purple-500/5 to-transparent"
+                                    title="Contact"
+                                    desc="Get in touch for internships, full-time & freelance"
+                                    badge="Let's Talk"
+                                    theme={theme}
+                                    pathname={pathname}
+                                />
                             </div>
                         </div>
                     </motion.div>
@@ -317,3 +346,5 @@ export default function CardNav({
         </div>
     );
 }
+
+export default CardNav;
