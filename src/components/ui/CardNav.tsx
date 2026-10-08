@@ -304,14 +304,15 @@ export function CardNav({
                                 <BentoCard
                                     href="/about"
                                     icon={Trophy}
-                                    colorClass="text-yellow-400"
-                                    gradientClass="from-yellow-500/15 via-yellow-500/5 to-transparent"
+                                    colorClass="text-primary"
+                                    gradientClass="from-primary/15 via-primary/5 to-transparent"
                                     title="About Umar"
-                                    desc="Engineering ethos, Cambridge (8.8 CGPA) & Lowe's India"
+                                    desc="Engineering background, Cambridge (ISE) & Lowe's India"
                                     badge="Bio"
                                     theme={theme}
                                     pathname={pathname}
                                 />
+
 
                                 {/* 3. Resume */}
                                 <BentoCard

@@ -90,13 +90,6 @@ export function NotchedProjectCard({
               )}
             />
           )}
-          {badge && (
-            <div className="pointer-events-none absolute inset-x-0 top-0 flex justify-start p-3 sm:p-4">
-              <span className="rounded-full border border-white/20 bg-black/60 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-md shadow-lg">
-                {badge}
-              </span>
-            </div>
-          )}
         </div>
 
         {/* the notch: a block with a concave corner, and a fillet at each
@@ -142,7 +135,7 @@ export function NotchedProjectCard({
       </div>
 
       <div className="mt-3 px-1">
-        <h3 className="text-lg sm:text-xl font-black tracking-tight text-white group-hover:text-primary transition-colors flex items-center justify-between">
+        <h3 className="text-lg sm:text-xl font-black tracking-tight text-white group-hover:text-zinc-200 transition-colors flex items-center justify-between">
           <span>{title}</span>
         </h3>
         {description && (

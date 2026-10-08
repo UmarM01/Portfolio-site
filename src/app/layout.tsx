@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   keywords: ['Umar Munshi', 'Software Engineer', 'Full-Stack Developer', 'Next.js', 'React', 'TypeScript', 'Node.js', 'Bengaluru'],
   authors: [{ name: 'Umar Munshi' }],
   icons: {
-    icon: '/about/umar.jpg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
   },
 };
 

@@ -29,10 +29,10 @@ export function ConnectTerminalSection() {
           {/* Left Text */}
           <div className="max-w-2xl space-y-2">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-shiny">
-              Let&apos;s Build Together.
+              Let&apos;s Build Together
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed mt-2">
-              Available for software engineering roles, full-stack contracts, and ambitious technical projects worldwide.
+              Available for engineering roles, contracts, and technical collaborations.
             </p>
           </div>
 
@@ -45,18 +45,18 @@ export function ConnectTerminalSection() {
               className="flex items-center justify-between gap-4 px-5 py-3 rounded-full bg-zinc-900 border border-white/10 hover:border-white/25 text-white text-xs font-bold transition-all shadow-lg group cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-primary" />
+                <Mail className="w-4 h-4 text-white" />
                 <span>{personal.email}</span>
               </div>
               <div className="p-1 rounded-md bg-white/5 text-zinc-400 group-hover:text-white">
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-white" /> : <Copy className="w-3.5 h-3.5" />}
               </div>
             </button>
 
             {/* Direct Message Link */}
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-xs font-bold uppercase tracking-wider hover:bg-zinc-200 transition-colors shadow-xl group"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-xs font-black uppercase tracking-wider hover:bg-zinc-200 transition-all shadow-xl hover:scale-105 active:scale-95 group"
             >
               <span>Open Contact Form</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -69,7 +69,7 @@ export function ConnectTerminalSection() {
         {/* Footer Meta Bar */}
         <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500">
           <div className="flex items-center gap-2">
-            <MapPin className="w-3.5 h-3.5 text-primary" />
+            <MapPin className="w-3.5 h-3.5 text-white" />
             <span>Bengaluru, India • Available Worldwide</span>
           </div>
 

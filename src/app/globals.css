@@ -65,3 +65,36 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* Marquee Animations */
+@keyframes canopy-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 2rem)));
+  }
+}
+
+.animate-canopy-x {
+  animation: canopy-x var(--duration, 35s) linear infinite;
+}
+
+.animate-canopy-x-reverse {
+  animation: canopy-x var(--duration, 35s) linear infinite reverse;
+}
+
+@keyframes canopy-y {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap, 2rem)));
+  }
+}
+
+.animate-canopy-y {
+  animation: canopy-y var(--duration, 35s) linear infinite;
+}
+
+
