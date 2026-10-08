@@ -108,8 +108,8 @@ export const portfolioData = {
       id: 'selligo',
       title: 'Selligo',
       subtitle: 'Consumer Electronics Selling Platform (selligo.in)',
-      description: 'Production recommerce platform serving 1,000+ daily visitors, enabling dynamic device valuation, doorstep pickup scheduling, and end-to-end used-device sales.',
-      longDescription: 'Selligo is a consumer electronics buyback and recommerce platform serving 1,000+ daily visitors. Engineered a 164-endpoint Express REST backend across 22 route modules and 20 MongoDB schemas supporting customers, orders, field operations, promotions, CMS, and administrative workflows. Developed a configurable device valuation engine and 10-zone fulfillment system connecting Admins, Partners, and field Pickers for pincode routing, order assignment, KYC/IMEI verification, and fulfillment. Integrated MSG91 OTP and AWS S3 while deploying Next.js SSR, Express, MongoDB, PM2, Nginx, and SSL on production Linux VPS infrastructure.',
+      description: 'Consumer electronics buyback and trade-in platform featuring a 164-endpoint Express backend, 20 MongoDB schemas, instant algorithmic valuation, and a 10-zone field logistics network.',
+      longDescription: 'Selligo is a consumer electronics recommerce and device buyback platform designed to automate instant smartphone valuation, doorstep pickup scheduling, and field device inspection. Built around a 164-endpoint Express backend, 20 MongoDB schemas, and a Next.js 16 frontend, the system connects consumer trade-ins directly with an internal 10-zone field logistics network. It coordinates multi-factor diagnostic price calculation, courier zone assignment, and on-site hardware verification across dedicated operational workflows for customers, logistics partners, field pickers, and administrators.',
       techStack: ['Node.js', 'Express', 'Next.js 16', 'MongoDB', 'AWS S3', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'MSG91 OTP', 'PM2', 'Nginx'],
       status: 'production' as const,
       demoUrl: 'https://selligo.in/',
@@ -117,24 +117,26 @@ export const portfolioData = {
       featured: true,
       category: 'Full-Stack' as const,
       keyMetrics: [
-        { label: 'Audience Scale', value: '1,000+ Daily', desc: 'Active unique recommerce visitors' },
-        { label: 'API Endpoints', value: '164 Endpoints', desc: '22 route modules & 20 MongoDB schemas' },
-        { label: 'Fulfillment Engine', value: '10-Zone Grid', desc: 'Admin, partner & picker routing' },
-        { label: 'Production Server', value: 'Linux VPS', desc: 'PM2, Nginx, SSL & Next.js SSR' }
+        { label: 'BACKEND ARCHITECTURE', value: '164 Endpoints', desc: '22 Express route modules' },
+        { label: 'DATA ARCHITECTURE', value: '20 Schemas', desc: 'MongoDB / Mongoose' },
+        { label: 'LOGISTICS NETWORK', value: '10 Dispatch Zones', desc: 'Pincode-based routing' },
+        { label: 'VALUATION ENGINE', value: '<15ms Evaluation', desc: 'Real-time device pricing' },
       ],
       architecture: [
-        'Built and maintained a production recommerce platform serving 1,000+ daily visitors, enabling dynamic device valuation, doorstep pickup scheduling, and end-to-end used-device sales.',
-        'Engineered a 164-endpoint Express REST backend across 22 route modules and 20 MongoDB schemas, supporting customers, orders, field operations, promotions, CMS, and administrative workflows.',
-        'Developed a configurable device valuation engine and 10-zone fulfillment system connecting Admins, Partners, and field Pickers for pincode routing, order assignment, KYC/IMEI verification, and fulfillment.',
-        'Integrated MSG91 OTP and AWS S3 while deploying Next.js SSR, Express, MongoDB, PM2, Nginx, and SSL on production Linux VPS infrastructure.'
+        '01 — Modular Backend: Built 164 REST endpoints across 22 Express route modules, separating customer, partner, picker, and administrative workflows through role-bounded service boundaries.',
+        '02 — Time-Aware Logistics Engine: Engineered server-side Asia/Kolkata scheduling logic that dynamically removes expired pickup slots and enforces an automatic 8:00 PM same-day cutoff.',
+        '03 — 10-Zone Dispatch Routing: Built pincode-based fulfillment routing across 10 logistics zones, assigning serviceable locations to the appropriate operational network.',
+        '04 — Algorithmic Valuation: Implemented a multi-factor device valuation engine that evaluates condition, defects, and diagnostic inputs to generate instant quotes in <15ms.',
+        '05 — Bulk Catalog Ingestion: Built an Excel-based ingestion pipeline capable of processing large pricing matrices, validating data and updating thousands of SKU records without individual API writes.',
+        '06 — Production Asset Pipeline: Implemented in-memory media streaming to AWS S3 for device inspection photos, identity documents, and bills, avoiding persistent media storage on the application server.'
       ],
       keyFeatures: [
-        '164-Endpoint Express REST Backend across 22 Route Modules.',
-        'Dynamic Algorithmic Device Valuation Matrix for Used Gadgets.',
-        '10-Zone Field Logistics Fulfillment Grid for Pickers & Partners.',
-        'Server-Side Slot Scheduling with Asia/Kolkata Cutoff Locking.',
-        'MSG91 Phone OTP Verification & AWS S3 Inspection Ingestion.',
-        'Production Linux VPS Deployment with PM2 Process Supervision & Nginx.'
+        'Instant Device Valuation: Multi-step diagnostic flow generating dynamic device quotes based on condition and functional inputs.',
+        'Smart Pickup Scheduling: Automatically filters available pickup windows based on current time, location, and valuation.',
+        '10-Zone Field Dispatch: Routes serviceable pincodes into defined fulfillment zones for partner and picker assignment.',
+        'Doorstep Device Verification: Pickup completion requires device condition evidence, customer ID, invoice, and IMEI verification.',
+        'Multi-Role Operations: Separate workflows for Admins, Partners, and Pickers, with restricted operational access.',
+        'Abandoned Order Capture: Captures incomplete valuation journeys and customer details for automated re-engagement.'
       ]
     },
     {

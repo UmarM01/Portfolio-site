@@ -33,8 +33,8 @@ export default function ProjectsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16">
         {projects.map((project: Project) => {
           const projectImages: Record<string, string> = {
-            zoopify: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80',
-            selligo: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=80',
+            zoopify: '/projects/zoopify.png',
+            selligo: '/projects/selligo.png',
             vitalbridge: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
             meraki: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
             'gym-management': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80',

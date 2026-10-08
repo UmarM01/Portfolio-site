@@ -33,7 +33,7 @@ export function FeaturedProjectsSection() {
         <NotchedProjectCard
           title={zoopify.title}
           description={zoopify.subtitle || zoopify.description}
-          image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=1200&q=80"
+          image="/projects/zoopify.png"
           tags={zoopify.techStack.slice(0, 4)}
           surface="#000000"
           accent="#D1FF4D"
@@ -44,7 +44,7 @@ export function FeaturedProjectsSection() {
         <NotchedProjectCard
           title={selligo.title}
           description={selligo.subtitle || selligo.description}
-          image="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=1200&q=80"
+          image="/projects/selligo.png"
           tags={selligo.techStack.slice(0, 4)}
           surface="#000000"
           accent="#D1FF4D"
