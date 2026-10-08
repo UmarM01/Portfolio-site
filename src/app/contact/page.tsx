@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Code, CheckCircle, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Code, CheckCircle, ArrowUpRight, Loader2, AlertCircle } from 'lucide-react';
 import { portfolioData } from '@/data/portfolio';
 
 export default function ContactPage() {
   const { personal } = portfolioData;
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,12 +18,40 @@ export default function ContactPage() {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Open default email client with prefilled details
-    const mailtoUrl = `mailto:${personal.email}?subject=${encodeURIComponent(formData.subject || 'Portfolio Inquiry')}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
-    window.location.href = mailtoUrl;
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch('https://formspree.io/f/mgaokpzw', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || 'Portfolio Direct Message',
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        const data = await response.json().catch(() => ({}));
+        setErrorMessage(
+          data?.errors?.[0]?.message || 'Something went wrong while sending your message. Please try again or email directly.'
+        );
+      }
+    } catch (err) {
+      setErrorMessage('Network error occurred. Please check your connection or reach out via email directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -57,17 +87,26 @@ export default function ContactPage() {
             {submitted ? (
               <div className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center space-y-3">
                 <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto" />
-                <h4 className="text-lg font-bold text-white">Opening Email Client...</h4>
-                <p className="text-xs text-zinc-400">If your mail app didn&apos;t open automatically, you can write directly to {personal.email}</p>
+                <h4 className="text-lg font-bold text-white">Message Sent Successfully!</h4>
+                <p className="text-xs text-zinc-300 max-w-sm mx-auto leading-relaxed">
+                  Thanks for reaching out! Your message has been delivered directly to my inbox. I&apos;ll get back to you as soon as possible.
+                </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 px-5 py-2 rounded-full bg-white/10 text-white text-xs font-bold hover:bg-white/20 transition-colors"
+                  className="mt-4 px-6 py-2.5 rounded-full bg-white text-black text-xs font-bold hover:bg-zinc-200 transition-colors cursor-pointer"
                 >
                   Send another message
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3.5">
+                {errorMessage && (
+                  <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Your Name</label>
@@ -119,10 +158,20 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-xl bg-white text-black font-black text-xs uppercase tracking-wider hover:bg-zinc-200 transition-colors shadow-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-xl bg-white text-black font-black text-xs uppercase tracking-wider hover:bg-zinc-200 transition-colors shadow-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Send Message</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Sending Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
