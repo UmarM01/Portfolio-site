@@ -73,9 +73,9 @@ export const portfolioData = {
       id: 'zoopify',
       title: 'Zoopify',
       subtitle: 'Refurbished E-Commerce Platform (zoopify.in)',
-      description: 'Production refurbished electronics platform featuring a 317-endpoint REST backend across 47 FastAPI modules on AWS EC2 and Cloudflare R2 infrastructure.',
-      longDescription: 'Zoopify is a production refurbished electronics and smartphone quick-commerce platform featuring a 317-endpoint REST backend across 47 FastAPI modules with AWS EC2 and Cloudflare R2 infrastructure. Engineered a multi-gateway payment layer integrating PayU, Razorpay, and Juspay with PostgreSQL pessimistic locking (SELECT ... FOR UPDATE) and server-to-server reconciliation to prevent unit double-booking. Implemented concurrency-safe GST invoice generation using PostgreSQL upserts and row-level locking, alongside production Nginx reverse proxying, SSL, and custom domain routing. Optimized server-side metadata and dynamic components to achieve Lighthouse scores of 100 SEO, 100 Accessibility, and 96 Best Practices.',
-      techStack: ['FastAPI', 'Next.js 16', 'PostgreSQL', 'Python', 'AWS EC2', 'Cloudflare R2', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'PayU / Razorpay / Juspay', 'Nginx'],
+      description: 'Production refurbished electronics quick-commerce platform featuring a 317-endpoint REST backend across 47 FastAPI modules on AWS EC2, PostgreSQL, and Cloudflare R2 infrastructure.',
+      longDescription: 'Zoopify is a production refurbished smartphone and electronics platform running a 317-endpoint asynchronous REST backend across 47 FastAPI modules. Engineered a multi-gateway payment architecture integrating PayU (Hosted Checkout Plus with SHA-512 request/response/command signatures), Juspay, and Razorpay with PostgreSQL pessimistic row-level locking (SELECT ... FOR UPDATE) and server-to-server reconciliation to eliminate device double-booking. Built a concurrency-safe automated GST Margin Scheme (Rule 32(5)) invoice engine using PostgreSQL upserts (INSERT ... ON CONFLICT DO NOTHING) and row locks for gap-free sequential document numbering, rendered headlessly via WeasyPrint and stored directly in Cloudflare R2. Orchestrated continuous lifespan background loops with automatic retries to release expired cart holds every 60 seconds and finalize abandoned orders every 300 seconds. Optimized server-rendered metadata, dynamic components, and bundle splitting in Next.js 16 and React 19 to achieve Lighthouse scores of 100 SEO, 100 Accessibility, and 96 Best Practices.',
+      techStack: ['FastAPI', 'Next.js 16', 'PostgreSQL', 'Python', 'AWS EC2', 'Cloudflare R2', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'PayU / Razorpay / Juspay', 'Nginx', 'WeasyPrint'],
       status: 'production' as const,
       demoUrl: 'https://zoopify.in/',
       repoUrl: 'https://github.com/UmarM01/',
@@ -83,24 +83,25 @@ export const portfolioData = {
       category: 'Full-Stack' as const,
       keyMetrics: [
         { label: 'Backend Architecture', value: '317 Endpoints', desc: '47 FastAPI async route modules' },
+        { label: 'Database Engineering', value: '80 Tables / 143 Indexes', desc: 'PostgreSQL schema with composite constraints' },
+        { label: 'Concurrency Safe', value: 'SELECT FOR UPDATE', desc: 'Pessimistic row locking on units & invoices' },
         { label: 'Lighthouse Benchmark', value: '100 SEO & A11y', desc: '96 Best Practices standard' },
-        { label: 'Concurrency Safe', value: 'Pessimistic Locks', desc: 'PostgreSQL SELECT FOR UPDATE' },
-        { label: 'Infrastructure', value: 'AWS & Cloudflare', desc: 'EC2, Nginx, SSL, R2 object store' },
       ],
       architecture: [
         'Built and deployed a production refurbished electronics platform featuring a 317-endpoint REST backend across 47 FastAPI modules with AWS EC2 and Cloudflare R2 infrastructure.',
-        'Engineered a multi-gateway payment layer integrating PayU, Razorpay, and Juspay with PostgreSQL pessimistic locking and server-to-server reconciliation to prevent unit double-booking.',
-        'Implemented concurrency-safe GST invoice generation using PostgreSQL upserts and row-level locking, alongside production Nginx reverse proxying, SSL, and custom domain routing.',
-        'Optimized server-side metadata and dynamic components to achieve Lighthouse scores of 100 SEO, 100 Accessibility, and 96 Best Practices.',
-        'Asynchronous lifespan background sweeps auto-releasing cart reservation holds and finalizing cancellation invoices.'
+        'Engineered a multi-gateway payment layer integrating PayU, Razorpay, and Juspay with PostgreSQL pessimistic locking (SELECT FOR UPDATE) and server-to-server reconciliation to prevent device double-booking.',
+        'Implemented concurrency-safe GST Margin Scheme Rule 32(5) invoice generation with gap-free sequential numbering using PostgreSQL upserts and row-level locking.',
+        'Orchestrated continuous lifespan background loops running 60s cart reservation expiry sweeps and 300s cancellation fee finalization with automatic retry wrappers.',
+        'Deployed production Linux VPS with PM2 process supervision, Nginx reverse proxying, SSL termination, and direct Cloudflare R2 public bucket asset ingestion.',
+        'Optimized Next.js 16 SSR and React 19 dynamic components to achieve Lighthouse scores of 100 SEO, 100 Accessibility, and 96 Best Practices.'
       ],
       keyFeatures: [
-        '317-Endpoint REST Backend across 47 FastAPI Asynchronous Modules.',
-        'Multi-Gateway Payment Integration (PayU, Razorpay, Juspay) with Split Legs.',
-        'Pessimistic Concurrency Locking to Prevent Device Double-Booking.',
-        'Concurrency-Safe GST Margin Scheme Rule 32(5) Automated Invoice Engine.',
-        'Production Nginx Reverse Proxy, SSL & Cloudflare R2 Media Infrastructure.',
-        'Perfect 100 SEO & 100 Accessibility Lighthouse Performance Benchmark.'
+        '317-Endpoint REST Backend across 47 FastAPI Asynchronous Route Modules.',
+        'Pessimistic Concurrency Locking (SELECT FOR UPDATE) to Prevent Refurbished Device Double-Booking.',
+        'Multi-Gateway Payment Integration (PayU Hosted Checkout, Razorpay, Juspay) with S2S State Reconciliation.',
+        'Automated GST Margin Scheme Rule 32(5) Tax Invoice Generation with Headless WeasyPrint to Cloudflare R2.',
+        'Continuous Lifespan Background Workers for Cart Reservation Expiry and Order Reconciliation.',
+        'Production Linux VPS Deployment with PM2 Process Supervision, Nginx, and SSL.'
       ]
     },
     {
@@ -170,33 +171,34 @@ export const portfolioData = {
     {
       id: 'meraki',
       title: 'Meraki',
-      subtitle: 'Digital Inheritance & Encrypted Vault Platform',
-      description: 'Encrypted digital inheritance vault using application-layer Fernet encryption across 12 asset categories with automated liveness escalation and Gemini AI.',
-      longDescription: 'Meraki is an encrypted digital inheritance and asset vault platform. Engineered an encrypted digital inheritance vault using application-layer Fernet encryption to secure sensitive information across 12 asset categories. Built a 6-stage automated liveness escalation workflow issuing tokenized check-ins through SMS, WhatsApp, and email with vacation-mode suppression. Integrated Gemini AI to interpret asset distribution intent and generate legal claim documentation accessible through single-use 64-character tokens.',
-      techStack: ['FastAPI', 'Supabase', 'Gemini AI', 'Next.js 16', 'React 19', 'TypeScript', 'Python', 'Tailwind CSS v4'],
+      subtitle: 'Digital Inheritance & Statutory Asset Transmission Platform',
+      description: 'Encrypted digital inheritance vault using application-layer Fernet encryption across 12 asset categories with multi-tier liveness escalation, Gemini 2.5 Flash legal drafting, and tokenized claim execution.',
+      longDescription: 'Meraki is an encrypted digital inheritance and asset vault platform engineered to solve posthumous asset transmission and testamentary intent execution. Built an application-layer cryptographic vault utilizing Fernet symmetric encryption with SHA-256 derived master keys to secure records across 12 statutory asset categories (bank accounts, fixed deposits, demat shares, mutual funds, real estate, crypto wallets, EPF/PPF, vehicles, and business equity). Designed a multi-tier automated liveness escalation state machine dispatching tokenized check-in verification events with vacation-mode suppression windows to eliminate premature triggers. Integrated Google Gemini 2.5 Flash to synthesize testator profile metadata, asset percentage allocations, executor appointments, and witness blocks into legally compliant Indian Last Will and Testament documents. Implemented an unauthenticated public claim verification gateway (/package/{token}) granting single-use 64-character token access to beneficiary distribution dossiers paired with institutional transmission playbooks (CAMS/KFintech, DP forms, Form CMV-29, and property mutation). Implemented custom zero-dependency RFC 6238 TOTP two-factor authentication.',
+      techStack: ['FastAPI', 'Supabase (PostgreSQL)', 'Gemini 2.5 Flash', 'Cryptography (Fernet)', 'Python', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Next.js 16'],
       status: 'completed' as const,
-      demoUrl: 'https://zoopify.in/',
       repoUrl: 'https://github.com/UmarM01/',
       featured: true,
       category: 'AI & Systems' as const,
       keyMetrics: [
-        { label: 'Vault Encryption', value: 'Fernet AES', desc: 'Application-layer secret security' },
-        { label: 'Asset Categories', value: '12 Scopes', desc: 'Financial, legal & digital assets' },
-        { label: 'Liveness Protocol', value: '6-Stage Flow', desc: 'Multi-channel check-in escalation' },
-        { label: 'AI Legal Claims', value: 'Gemini AI', desc: 'Single-use 64-character token access' }
+        { label: 'Vault Cryptography', value: 'Fernet AES-256', desc: 'SHA-256 derived master encryption' },
+        { label: 'Asset Scopes', value: '12 Categories', desc: 'Statutory claims & transmission' },
+        { label: 'Liveness Protocol', value: 'Multi-Tier State Machine', desc: 'Tokenized check-in & vacation lock' },
+        { label: 'AI Will Engine', value: 'Gemini 2.5 Flash', desc: 'Automated Indian legal will drafting' }
       ],
       architecture: [
-        'Engineered an encrypted digital inheritance vault using application-layer Fernet encryption to secure sensitive information across 12 asset categories.',
-        'Built a 6-stage automated liveness escalation workflow issuing tokenized check-ins through SMS, WhatsApp, and email with vacation-mode suppression.',
-        'Integrated Gemini AI to interpret asset distribution intent and generate legal claim documentation accessible through single-use 64-character tokens.',
-        'FastAPI backend with Supabase PostgreSQL for encrypted relational data storage.'
+        'Engineered an application-layer encrypted vault utilizing Fernet symmetric encryption with SHA-256 derived URL-safe base64 keys to protect confidential asset records across 12 categories.',
+        'Built a multi-tier liveness escalation state machine dispatching tokenized check-in events across channels, coupled with date-bounded vacation-mode suppression to prevent false alarms.',
+        'Integrated Google Gemini 2.5 Flash legal drafting engine that maps testator profile details, percentage shares, executors, and witnesses into standard Indian Last Will and Testament documents.',
+        'Engineered a secure beneficiary claim endpoint (/package/{token}) validating single-use 64-character tokens to generate actionable statutory transmission dossiers (CAMS/KFintech, DP, CMV-29, EPFO).',
+        'Implemented a zero-dependency RFC 6238 TOTP two-factor authentication engine using raw byte struct packing and HMAC-SHA1 dynamic truncation.'
       ],
       keyFeatures: [
-        'Application-Layer Fernet Encryption for 12 Digital Asset Categories.',
-        '6-Stage Automated Liveness Escalation Engine (SMS, WhatsApp, Email).',
-        'Vacation-Mode Suppression to Prevent Unintended Vault Triggering.',
-        'Gemini AI Distribution Intent Interpreter for Claim Documentation.',
-        'Single-Use 64-Character Token Authentication for Beneficiaries.'
+        'Application-Layer Fernet Encryption for 12 Asset Categories with Zero Plaintext Leakage.',
+        'Multi-Tier Automated Liveness Escalation State Machine with Tokenized Verification.',
+        'Vacation-Mode Date Window Suppression to Safeguard Against Accidental Triggering.',
+        'Google Gemini 2.5 Flash Legal Intent Synthesizer for Indian Testamentary Wills.',
+        'Single-Use 64-Character Token Authentication for Beneficiary Claim Execution.',
+        'Custom Zero-Dependency RFC 6238 Cryptographic TOTP Engine.'
       ]
     },
     {
