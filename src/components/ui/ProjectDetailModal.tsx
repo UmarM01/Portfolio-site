@@ -131,7 +131,7 @@ export function ProjectDetailModal({ project, isOpen, onClose }: ProjectDetailMo
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-primary" />
-                    <span>Performance & SLA Metrics</span>
+                    <span>Performance & Engineering Metrics</span>
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {project.keyMetrics.map((metric, mIdx) => (

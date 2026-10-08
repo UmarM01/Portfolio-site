@@ -73,35 +73,35 @@ export const portfolioData = {
       id: 'zoopify',
       title: 'Zoopify',
       subtitle: 'Refurbished E-Commerce Platform (zoopify.in)',
-      description: 'Production refurbished electronics quick-commerce platform featuring a 317-endpoint REST backend across 47 FastAPI modules on AWS EC2, PostgreSQL, and Cloudflare R2 infrastructure.',
-      longDescription: 'Zoopify is a production refurbished smartphone and electronics platform running a 317-endpoint asynchronous REST backend across 47 FastAPI modules. Engineered a multi-gateway payment architecture integrating PayU (Hosted Checkout Plus with SHA-512 request/response/command signatures), Juspay, and Razorpay with PostgreSQL pessimistic row-level locking (SELECT ... FOR UPDATE) and server-to-server reconciliation to eliminate device double-booking. Built a concurrency-safe automated GST Margin Scheme (Rule 32(5)) invoice engine using PostgreSQL upserts (INSERT ... ON CONFLICT DO NOTHING) and row locks for gap-free sequential document numbering, rendered headlessly via WeasyPrint and stored directly in Cloudflare R2. Orchestrated continuous lifespan background loops with automatic retries to release expired cart holds every 60 seconds and finalize abandoned orders every 300 seconds. Optimized server-rendered metadata, dynamic components, and bundle splitting in Next.js 16 and React 19 to achieve Lighthouse scores of 100 SEO, 100 Accessibility, and 96 Best Practices.',
-      techStack: ['FastAPI', 'Next.js 16', 'PostgreSQL', 'Python', 'AWS EC2', 'Cloudflare R2', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'PayU / Razorpay / Juspay', 'Nginx', 'WeasyPrint'],
+      description: 'Production refurbished electronics platform built around a 317-endpoint asynchronous FastAPI backend, Next.js 16, and an 80-table PostgreSQL architecture with transaction-level concurrency control.',
+      longDescription: 'Zoopify is a production refurbished electronics platform built around a 317-endpoint asynchronous FastAPI backend, Next.js 16, and an 80-table PostgreSQL architecture. The platform tracks individual physical devices by serial and IMEI, using transaction-level locking to prevent concurrent double-allocation while payment reconciliation, inventory reservations, and background lifecycle processes handle critical transactional workflows.',
+      techStack: ['FastAPI', 'Next.js 16', 'PostgreSQL', 'Python', 'AWS EC2', 'Cloudflare R2', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'PayU / Juspay', 'Nginx', 'PM2'],
       status: 'production' as const,
       demoUrl: 'https://zoopify.in/',
       repoUrl: 'https://github.com/UmarM01/',
       featured: true,
       category: 'Full-Stack' as const,
       keyMetrics: [
-        { label: 'Backend Architecture', value: '317 Endpoints', desc: '47 FastAPI async route modules' },
-        { label: 'Database Engineering', value: '80 Tables / 143 Indexes', desc: 'PostgreSQL schema with composite constraints' },
-        { label: 'Concurrency Safe', value: 'SELECT FOR UPDATE', desc: 'Pessimistic row locking on units & invoices' },
-        { label: 'Lighthouse Benchmark', value: '100 SEO & A11y', desc: '96 Best Practices standard' },
+        { label: 'BACKEND ARCHITECTURE', value: '317 Endpoints', desc: '47 async FastAPI route modules' },
+        { label: 'DATABASE ENGINEERING', value: '80 Tables / 143 Indexes', desc: 'Normalized PostgreSQL schema' },
+        { label: 'CONCURRENCY CONTROL', value: 'Race-Condition Safe', desc: 'PostgreSQL row-level locking' },
+        { label: 'LIGHTHOUSE BENCHMARK', value: '100 SEO / 100 A11y', desc: '96 Best Practices' },
       ],
       architecture: [
-        'Built and deployed a production refurbished electronics platform featuring a 317-endpoint REST backend across 47 FastAPI modules with AWS EC2 and Cloudflare R2 infrastructure.',
-        'Engineered a multi-gateway payment layer integrating PayU, Razorpay, and Juspay with PostgreSQL pessimistic locking (SELECT FOR UPDATE) and server-to-server reconciliation to prevent device double-booking.',
-        'Implemented concurrency-safe GST Margin Scheme Rule 32(5) invoice generation with gap-free sequential numbering using PostgreSQL upserts and row-level locking.',
-        'Orchestrated continuous lifespan background loops running 60s cart reservation expiry sweeps and 300s cancellation fee finalization with automatic retry wrappers.',
-        'Deployed production Linux VPS with PM2 process supervision, Nginx reverse proxying, SSL termination, and direct Cloudflare R2 public bucket asset ingestion.',
-        'Optimized Next.js 16 SSR and React 19 dynamic components to achieve Lighthouse scores of 100 SEO, 100 Accessibility, and 96 Best Practices.'
+        'Modular Backend Architecture: Built 317 REST endpoints across 47 isolated asynchronous FastAPI modules, organized through domain-specific routers and dependency-injected services.',
+        'Concurrency Control: Implemented PostgreSQL pessimistic row locking to serialize concurrent checkout attempts against individual physical devices, with automatic reclamation of expired 15-minute reservations.',
+        'Payment Reliability: Engineered multi-layer payment verification combining SHA-512 signatures, server-to-server status verification, and idempotent webhook processing.',
+        'Database Engineering: Built an 80-table PostgreSQL architecture with 143 strategic indexes, unique hardware constraints, transactional locking, and JSONB-based audit data.',
+        'Self-Healing Background Systems: Implemented autonomous async lifecycle supervisors that reclaim expired inventory every 60 seconds and clean up abandoned orders every 300 seconds with fault-tolerant retry handling.',
+        'Production Infrastructure: Deployed Nginx + PM2 production infrastructure with PostgreSQL and Cloudflare R2, using stateless media storage and automatic process recovery.'
       ],
       keyFeatures: [
-        '317-Endpoint REST Backend across 47 FastAPI Asynchronous Route Modules.',
-        'Pessimistic Concurrency Locking (SELECT FOR UPDATE) to Prevent Refurbished Device Double-Booking.',
-        'Multi-Gateway Payment Integration (PayU Hosted Checkout, Razorpay, Juspay) with S2S State Reconciliation.',
-        'Automated GST Margin Scheme Rule 32(5) Tax Invoice Generation with Headless WeasyPrint to Cloudflare R2.',
-        'Continuous Lifespan Background Workers for Cart Reservation Expiry and Order Reconciliation.',
-        'Production Linux VPS Deployment with PM2 Process Supervision, Nginx, and SSL.'
+        'Unique Device Inventory: Serial and IMEI-level tracking for individual refurbished physical devices.',
+        'Concurrent Checkout: 15-minute inventory reservations with automatic expiry and reclamation.',
+        'Multi-Gateway Payments: PayU / Juspay payment workflows with server-side verification and webhook reconciliation.',
+        'Tokenized COD: ₹250 upfront reservation token designed to reduce Cash-on-Delivery refusal risk.',
+        'Automated Order Lifecycles: Background processes release abandoned inventory and expire incomplete checkout sessions.',
+        'Media & Document Pipeline: Device inspection media and generated documentation streamed directly to Cloudflare R2.'
       ]
     },
     {
@@ -199,6 +199,37 @@ export const portfolioData = {
         'Google Gemini 2.5 Flash Legal Intent Synthesizer for Indian Testamentary Wills.',
         'Single-Use 64-Character Token Authentication for Beneficiary Claim Execution.',
         'Custom Zero-Dependency RFC 6238 Cryptographic TOTP Engine.'
+      ]
+    },
+    {
+      id: 'gym-management',
+      title: 'GymFlow',
+      subtitle: 'Multi-Tenant Fitness & Membership Management SaaS',
+      description: 'Full-stack multi-tenant gym management system featuring member lifecycle tracking, automated recurring billing, QR-code attendance verification, and real-time revenue analytics.',
+      longDescription: 'GymFlow is a full-stack gym management platform designed to automate administrative and operational workflows for fitness clubs. Engineered with a modular Express backend and React client, the system provides end-to-end membership lifecycle tracking, attendance logging via QR codes and manual check-ins, automated subscription plan management, expense and equipment tracking, and interactive financial reporting with Recharts. Features comprehensive role-based access control (RBAC), Zod schema validation, and secure authentication to safeguard member and financial records.',
+      techStack: ['Node.js', 'Express', 'React', 'PostgreSQL / SQLite', 'Zod', 'JWT', 'Tailwind CSS', 'Recharts', 'Framer Motion'],
+      status: 'completed' as const,
+      repoUrl: 'https://github.com/UmarM01/',
+      featured: true,
+      category: 'Full-Stack' as const,
+      keyMetrics: [
+        { label: 'Role-Based RBAC', value: 'Multi-Tenant', desc: 'Owner, manager, trainer & member scopes' },
+        { label: 'Data Validation', value: '100% Zod Validated', desc: 'Strict runtime schema validation' },
+        { label: 'Attendance Log', value: 'QR & Digital', desc: 'Instant check-in & attendance auditing' },
+        { label: 'Revenue Analytics', value: 'Real-Time MRR', desc: 'Cashflow, churn & plan distributions' }
+      ],
+      architecture: [
+        'Modular Express.js REST API structured across dedicated domain routers (members, plans, attendance, payments, expenses, gyms).',
+        'Multi-tier role-based authentication and authorization using JSON Web Tokens (JWT) and bcrypt password hashing.',
+        'Strict runtime schema validation via Zod on all incoming mutation payloads, preventing data corruption and injection vectors.',
+        'Dynamic financial and membership reporting powered by Recharts visualizing member churn, retention, and monthly revenue trends.'
+      ],
+      keyFeatures: [
+        'Complete Membership Lifecycle & Automated Subscription Renewal Tracking.',
+        'Digital QR Code & Manual Attendance Check-in Verification.',
+        'Role-Based Staff & Member Access Control with Encrypted Credentials.',
+        'Expense, Inventory, and Equipment Maintenance Tracking.',
+        'Real-Time Financial Dashboard with Revenue Breakdown and Export Capabilities.'
       ]
     },
     {
