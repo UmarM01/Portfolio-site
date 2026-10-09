@@ -56,13 +56,13 @@ export function FeaturedProjectsSection() {
         />
       </div>
 
-      {/* Centered View Full Projects CTA at Bottom */}
+      {/* Centered View All Projects CTA at Bottom */}
       <div className="flex justify-center mt-10 sm:mt-12 w-full">
         <Link
           href="/projects"
           className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-[#D1FF4D] text-black text-xs font-black uppercase tracking-wider hover:bg-[#b8f02e] transition-all shadow-lg shadow-[#D1FF4D]/20 hover:scale-105 active:scale-95 group"
         >
-          <span>View Full Projects</span>
+          <span>View All Projects</span>
           <ArrowRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>

@@ -36,7 +36,7 @@ export default function ProjectsPage() {
             zoopify: '/projects/zoopify.png',
             selligo: '/projects/selligo.png',
             vitalbridge: '/projects/vitalbridge.png',
-            'portfolio-site': 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
+            'portfolio-site': '/projects/portfolio-site.png',
             meraki: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
             'gym-management': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80',
             termizen: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1200&q=80',
