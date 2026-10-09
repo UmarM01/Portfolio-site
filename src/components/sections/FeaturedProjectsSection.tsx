@@ -37,6 +37,8 @@ export function FeaturedProjectsSection() {
           tags={zoopify.techStack.slice(0, 4)}
           surface="#000000"
           accent="#D1FF4D"
+          demoUrl={zoopify.demoUrl}
+          onLearnMore={() => setActiveProject(zoopify)}
           onClick={() => setActiveProject(zoopify)}
         />
 
@@ -48,6 +50,8 @@ export function FeaturedProjectsSection() {
           tags={selligo.techStack.slice(0, 4)}
           surface="#000000"
           accent="#D1FF4D"
+          demoUrl={selligo.demoUrl}
+          onLearnMore={() => setActiveProject(selligo)}
           onClick={() => setActiveProject(selligo)}
         />
       </div>

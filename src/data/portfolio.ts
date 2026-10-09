@@ -171,6 +171,42 @@ export const portfolioData = {
       ]
     },
     {
+      id: 'portfolio-site',
+      title: 'Engineering Portfolio',
+      subtitle: 'Static-Optimized Engineering Showcase & Architecture Matrix',
+      description: 'High-performance personal web platform engineered with Next.js 16, React 19, and TypeScript, featuring static site generation (SSG), GSAP animations, and an in-page Formspree AJAX pipeline.',
+      longDescription: 'A high-performance personal engineering platform and technical showcase built with Next.js 16, React 19, and strict TypeScript. The platform combines static pre-rendering (SSG), hardware-accelerated GSAP context animations, custom mathematical radial notch card geometry, and a zero-backend Formspree AJAX contact pipeline, achieving 100/100 Lighthouse SEO and Accessibility with an 87.3 kB shared JavaScript bundle.',
+      techStack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS v4', 'Framer Motion', 'GSAP', 'Formspree AJAX', 'Vercel'],
+      status: 'production' as const,
+      demoUrl: '/',
+      repoUrl: 'https://github.com/UmarM01/Portfolio-site',
+      featured: true,
+      category: 'Full-Stack' as const,
+      keyMetrics: [
+        { label: 'FRONTEND ARCHITECTURE', value: 'Next.js 16 / React 19', desc: 'Static Site Generation & TypeScript' },
+        { label: 'BUNDLE OPTIMIZATION', value: '87.3 kB Shared JS', desc: 'Zero-bloat optimized runtime' },
+        { label: 'LIGHTHOUSE BENCHMARK', value: '100 SEO / 100 A11y', desc: '96 Best Practices standard' },
+        { label: 'FORM INTEGRATION', value: '100% In-Page AJAX', desc: 'Zero-redirect Formspree pipeline' }
+      ],
+      architecture: [
+        '01 — Static Site Generation (SSG): Built with Next.js App Router pre-rendering static routes at compile time for sub-100ms edge delivery.',
+        '02 — Minimal Bundle Footprint: Optimized component tree-shaking and dynamic imports to achieve a shared First Load JS bundle of just 87.3 kB.',
+        '03 — Scoped GSAP & Motion Pipeline: Engineered memory-safe animations using GSAP context (gsap.context) and Framer Motion hardware-accelerated spring physics.',
+        '04 — Parametric Notched Geometry: Implemented mathematical concave card cutouts combining parametric radial gradients and absolute SVG disc alignments.',
+        '05 — Zero-Redirect AJAX Contact Flow: Integrated background Formspree API submission with real-time error handling, input locking, and in-page confirmation.',
+        '06 — Full Lighthouse Optimization: Achieved perfect 100/100 SEO and 100/100 Accessibility scores through semantic HTML5 landmarks and WCAG-compliant color contrast.'
+      ],
+      keyFeatures: [
+        'Instant Static Navigation: Seamless routing across Home, About, Projects, and Contact with zero full-page reloads.',
+        'Interactive Project Modals: Deep-dive architectural breakdowns with verified performance metrics and engineering summaries.',
+        'Responsive Notched Cards: Custom-engineered card layouts with live demo launch triggers and modal popups.',
+        'Silent Contact Submissions: Direct in-page message delivery without opening mail apps or external tabs.',
+        'Interactive Career Timeline: Chronological engineering and operations experience visualization with role highlights.',
+        'Responsive Command Navigation: Mobile menu drawer with smooth toggle transitions and desktop pills.'
+      ]
+    },
+    /*
+    {
       id: 'meraki',
       title: 'Meraki',
       subtitle: 'Digital Inheritance & Statutory Asset Transmission Platform',
@@ -297,6 +333,7 @@ export const portfolioData = {
         'FastAPI Inference API with Live Streaming Dashboard.'
       ]
     },
+    */
   ],
   experience: [
     {

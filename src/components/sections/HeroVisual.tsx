@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bot, Zap, ChevronDown } from 'lucide-react';
 import gsap from "gsap";
@@ -165,14 +166,14 @@ export function HeroVisual() {
             transition={{ duration: 0.8, delay: 0.45 }}
             className="flex flex-row items-center justify-start md:justify-center gap-2.5 sm:gap-4 mt-6 sm:mt-8 w-full select-none"
           >
-            {/* 1. View Projects (Scrolls to Projects Section) */}
-            <a
-              href="#projects"
+            {/* 1. View Projects (Navigates to Projects Page) */}
+            <Link
+              href="/projects"
               className="w-32 sm:w-44 h-10 sm:h-11 inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-zinc-900 border border-white/15 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider hover:bg-zinc-800 hover:border-white/30 transition-all shadow-xl hover:scale-105 active:scale-95 cursor-pointer shrink-0"
             >
               <span>View Projects</span>
-              <span className="text-sky-400 font-bold">↓</span>
-            </a>
+              <span className="text-[#D1FF4D] font-bold">→</span>
+            </Link>
 
             {/* 2. Distinct Clean Resume Button */}
             <a

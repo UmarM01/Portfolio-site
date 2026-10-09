@@ -36,6 +36,7 @@ export default function ProjectsPage() {
             zoopify: '/projects/zoopify.png',
             selligo: '/projects/selligo.png',
             vitalbridge: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80',
+            'portfolio-site': 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80',
             meraki: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
             'gym-management': 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80',
             termizen: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1200&q=80',
@@ -53,6 +54,8 @@ export default function ProjectsPage() {
               tags={project.techStack.slice(0, 4)}
               surface="#000000"
               accent="#D1FF4D"
+              demoUrl={project.demoUrl}
+              onLearnMore={() => setActiveProject(project)}
               onClick={() => setActiveProject(project)}
             />
           );

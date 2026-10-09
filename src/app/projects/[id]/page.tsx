@@ -2,12 +2,41 @@ import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ExternalLink, Github, CheckCircle2, Sparkles, Cpu, Layers, Check } from 'lucide-react';
+import type { Metadata } from 'next';
 import { portfolioData } from '@/data/portfolio';
 
 export async function generateStaticParams() {
   return portfolioData.projects.map((p) => ({
     id: p.id,
   }));
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const project = portfolioData.projects.find((p) => p.id === params.id);
+  if (!project) {
+    return {
+      title: 'Project Not Found',
+    };
+  }
+
+  return {
+    title: `${project.title} — Architecture & Technical Breakdown`,
+    description: project.description || project.subtitle,
+    alternates: {
+      canonical: `/projects/${project.id}`,
+    },
+    openGraph: {
+      title: `${project.title} | Umar Munshi`,
+      description: project.description || project.subtitle,
+      url: `/projects/${project.id}`,
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} | Umar Munshi`,
+      description: project.description || project.subtitle,
+    },
+  };
 }
 
 export default function ProjectDetailPage({ params }: { params: { id: string } }) {
