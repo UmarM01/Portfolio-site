@@ -142,32 +142,35 @@ export const portfolioData = {
     {
       id: 'vitalbridge',
       title: 'VitalBridge',
-      subtitle: 'Multi-Agent AI Hospital Pre-Arrival System',
-      description: 'Real-time emergency triage system connecting moving ambulance audio streams to hospital ER preparation dashboards through a 4-node LangGraph StateGraph pipeline.',
-      longDescription: 'VitalBridge is a real-time clinical triage infrastructure connecting moving ambulance audio streams to hospital ER preparation dashboards. Designed with a 4-node LangGraph StateGraph pipeline (paramedic_ingestion -> ot_agent -> blood_bank_agent -> bed_logistics_agent). Integrated OpenAI/Groq Whisper for in-memory speech transcription with zero disk persistence to automatically classify emergency trauma information under strict clinical privacy. Orchestrated 5 concurrent role-bounded LLM agents with deterministic fallback handlers to assign ER bays, calculate blood-bank requirements, and dispatch preparation checklists, gated by primary doctor verification and immutable Supabase audit logs.',
-      techStack: ['FastAPI', 'LangGraph', 'Groq / OpenAI', 'Whisper AI', 'Supabase (PostgreSQL)', 'React 19', 'TypeScript', 'WebSockets', 'Tailwind CSS v4'],
+      subtitle: 'Ambulance-to-Hospital Preparation & Doctor Approval Workflow System',
+      description: 'Ambulance-to-hospital coordination prototype connecting incoming reports, receiving teams, and doctor-approved preparation tasks.',
+      longDescription: 'VitalBridge is an ambulance-to-hospital emergency preparation and clinical coordination prototype built with FastAPI, React, and Supabase. The platform models human-controlled operational workflows around AI assistance: selecting preparation tasks from an 18-template controlled domain catalog across 4 clinical pathways, requiring primary-doctor approval before restricted procedures can proceed, preserving completed tasks across repeated ambulance updates, and running five role-specific agents concurrently with deterministic fallback findings.',
+      techStack: ['FastAPI', 'Python', 'React', 'TypeScript', 'Supabase', 'Pydantic', 'Groq / OpenAI', 'Tailwind CSS'],
       status: 'completed' as const,
       repoUrl: 'https://github.com/UmarM01/',
       featured: true,
       category: 'AI & Systems' as const,
       keyMetrics: [
-        { label: 'LangGraph Pipeline', value: '4-Node DAG', desc: 'Sequential StateGraph clinical triage' },
-        { label: 'Concurrent Agents', value: '5 Parallel', desc: 'ThreadPoolExecutor role-bounded LLMs' },
-        { label: 'Speech Persistence', value: '0-Disk Writes', desc: 'In-memory WebM Whisper transcription' },
-        { label: 'Clinical Security', value: 'Doctor-Gated', desc: 'Immutable Supabase audit logging' }
+        { label: 'CONTROLLED CATALOG', value: '18 Templates', desc: '4 pathways: trauma, cardiac, respiratory, stable' },
+        { label: 'AI COORDINATION', value: '5 Concurrent Agents', desc: 'Role-bounded findings with deterministic fallbacks' },
+        { label: 'WORKFLOW AUTHORITY', value: 'Doctor-Gated Approval', desc: 'Primary ER doctor sign-off for restricted tasks' },
+        { label: 'API OPERATIONS', value: '60 Workflow Endpoints', desc: 'FastAPI domain engine + Supabase hydration' }
       ],
       architecture: [
-        'Designed a real-time emergency triage system connecting moving ambulance audio streams to hospital ER preparation dashboards through a 4-node LangGraph StateGraph pipeline.',
-        'Integrated OpenAI/Groq Whisper for in-memory speech transcription with zero disk persistence to automatically classify emergency trauma information.',
-        'Orchestrated 5 concurrent role-bounded LLM agents with deterministic fallback handlers to assign ER bays, calculate blood-bank requirements, and dispatch preparation checklists.',
-        'Doctor-gated clinical approval state machine gating high-risk procedures with immutable Supabase audit logs.'
+        '01 — Deterministic Preparation Catalog: Replaced unconstrained generative actions with an 18-template controlled catalog across 4 pathways (trauma, cardiac, respiratory, stable). AI agents produce supporting clinical findings, but domain code strictly governs task creation and execution.',
+        '02 — Primary-Doctor Human-in-the-Loop Gate: Enforced case-specific ownership where medium- and high-risk preparation tasks stay locked in pending status until the assigned primary ER doctor explicitly reviews and authorizes or rejects them.',
+        '03 — Work-Preserving Update Deduplication: Engineered template-key deduplication separating incoming ambulance telemetry from persistent hospital preparation. Repeated audio reports append new clinical observations without wiping or recreating already completed tasks.',
+        '04 — Operational Staff Allocation Engine: Automated receiving-team composition by filtering role, medical specialty, availability, and active shift state, ranking eligible staff by current case workload and exposing unfilled staffing gaps.',
+        '05 — Concurrent Multi-Agent Coordination: Executed 5 role-specific agents concurrently via a background thread pool with stable result ordering. Call exceptions produce structured fallback findings, ensuring external AI failures never crash coordination.',
+        '06 — Role-Restricted Case Projections: Segmented data feeds server-side so clinical staff only access assigned cases, ambulances only update linked transports, and blood-bank feeds receive anonymized task metadata without patient identities or raw audio.'
       ],
       keyFeatures: [
-        '4-Node LangGraph StateGraph Autonomous Clinical Triage DAG.',
-        'In-Memory Whisper Speech Transcription with Zero Disk Persistence.',
-        '5 Concurrent Role-Bounded LLM Agents (ThreadPoolExecutor).',
-        'Doctor-Gated Clinical Task State Machine with Audit Trail.',
-        'Real-Time WebSocket State Synchronization for Ambulance & ER Teams.'
+        'Controlled Preparation Catalog: 18 deterministic task templates across trauma, cardiac, respiratory, and stable pathways.',
+        'Primary-Doctor Approval Gate: Restricted clinical preparation requires explicit authorization from the assigned primary ER doctor.',
+        'Persistent Task Deduplication: Continuous ambulance updates enrich observations while preserving completed preparation milestones.',
+        'Constraint-Based Staff Allocation: Automated receiving-team assignment factoring in role, shift availability, and active workload.',
+        'Concurrent Role-Specific Agents: 5 parallel AI agents providing bedside, blood bank, and surgical summaries with deterministic fallback.',
+        'Restricted Multi-Role Portals: Role-tailored workspaces for Doctors, Nurses, Receptionists, and Ambulances with strict boundary filters.'
       ]
     },
     {
